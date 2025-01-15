@@ -1,19 +1,29 @@
-const promiseExample = new Promise((resolve, reject) => {
-    //
-    //Simulación código Asíncrono
-    //
-    const hypotheticalResultAsyncCode = 23;
-    const resultNeeded = 23;
-    (hypotheticalResultAsyncCode === resultNeeded)
-        ? resolve(hypotheticalResultAsyncCode)
-        : reject('Error en código asíncrono');
-});
-console.log(promiseExample);
+//Crear una promesa simulando una operación asincrona y darle manejo
 
-promiseExample.then((resolveValue) => {
-    console.log(`Valor de resolución de la promesa: ${resolveValue}`);
-}).catch((err) => {
-    console.error(`Promesa rechazada, motivo: ${err}`);
-}).finally(() => {
-    console.log(`Promesa culminada`);
-})
+const myFirstPromise = new Promise((resolve, reject) => {
+    //
+    //
+    // Simulación de código Async
+    //
+    //
+    let hypotheticalResultAsyncCode = 20;
+    let desiredResult = 20;
+
+    if (hypotheticalResultAsyncCode === desiredResult) {
+        resolve(hypotheticalResultAsyncCode);
+    } else {
+        reject(`El código asincrono no genero el resultado adecuado`);
+    }
+});
+console.log(myFirstPromise);
+
+
+myFirstPromise
+    .then((value) => {
+        console.log(`La promesa se resolvio con exito (Valor de resolución: ${value})`);
+    }).catch((error) => {
+        console.log(`Promesa rechazada, motivo: ${error}`);
+    }).finally(() => {
+        console.log(`Fin de la promesa`);
+    });
+

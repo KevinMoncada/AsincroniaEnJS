@@ -1,54 +1,56 @@
-// Crear un ejemplo de Encadenamiento con 3 Promesas (Donde cada tarea asíncrona depende del resultado de la anterior), ademas las promesas ahora deben crearse dentro de funciones, para poder ejecutarlas cuando se quiera y evitar que lo hagan automaticamente. (USANDO Async y Await)
+// Crear un ejemplo de Encadenamiento con 3 Promesas (Donde cada tarea asíncrona depende del resultado de la anterior), ademas las promesas ahora deben crearse dentro de funciones, para poder ejecutarlas cuando se quiera y evitar que lo hagan automaticamente. (Usar Async y Await para el manejo de las promesas)
+
 
 function firstPromise() {
     return new Promise((resolve, reject) => {
         //Simulación código Asíncrono
-        const hypotheticalResultAsyncCode = 123;
-        const desiredResultToResolvePromise = 123;
+        const hypotheticalResultAsyncCode = 100;
+        const desiredResultToResolvePromise = 100;
 
         (hypotheticalResultAsyncCode === desiredResultToResolvePromise)
             ? resolve(hypotheticalResultAsyncCode)
             : reject('error en código asíncrono (Promesa1)');
-    })
+    });
 }
 
-function secondPromise(result1) {
+function secondPromise(firstPromiseResolveValue) {
     return new Promise((resolve, reject) => {
         //Simulación código Asíncrono
-        const hypotheticalResultAsyncCode = 100 + result1;
-        const desiredResultToResolvePromise = 223;
+        const hypotheticalResultAsyncCode = (200 + firstPromiseResolveValue);
+        const desiredResultToResolvePromise = 300;
 
         (hypotheticalResultAsyncCode === desiredResultToResolvePromise)
             ? resolve(hypotheticalResultAsyncCode)
             : reject('error en código asíncrono (Promesa2)');
-    })
+    });
 }
 
-function thirdPromise(result1, result2) {
+function thirdPromise(firstPromiseResolveValue, secondPromiseResolveValue) {
     return new Promise((resolve, reject) => {
         //Simulación código Asíncrono
-        const hypotheticalResultAsyncCode = ((result1 + result2) - 1);
-        const desiredResultToResolvePromise = 345;
+        const hypotheticalResultAsyncCode = (200 + firstPromiseResolveValue - secondPromiseResolveValue);
+        const desiredResultToResolvePromise = 0;
 
         (hypotheticalResultAsyncCode === desiredResultToResolvePromise)
             ? resolve(hypotheticalResultAsyncCode)
             : reject('error en código asíncrono (Promesa3)');
-    })
+    });
 }
 
-async function secondPoint() {
+async function treatmentOfPromises() {
     try {
-        const resolveValue1 = await firstPromise();
-        console.log(resolveValue1);
-        const resolveValue2 = await secondPromise(resolveValue1);
-        console.log(resolveValue2);
-        const resolveValue3 = await thirdPromise(resolveValue1, resolveValue2);
-        console.log(resolveValue3);
+        const firstPromiseExecution = await firstPromise();
+        console.log(`Promesa1 resuelta con exito, ResolveValue: ${firstPromiseExecution}`);
 
-    } catch (error) {
-        console.log(`Promesa rechazada, motivo: ${error}`);
+        const secondPromiseExecution = await secondPromise(firstPromiseExecution);
+        console.log(`Promesa2 resuelta con exito, ResolveValue: ${secondPromiseExecution}`);
+
+        const thirdPromiseExecution = await thirdPromise(firstPromiseExecution, secondPromiseExecution);
+        console.log(`Promesa3 resuelta con exito, ResolveValue: ${thirdPromiseExecution}`);
+    } catch (err) {
+        console.log(`Promeza rechazada, Motivo: ${err}`);
     }
 }
 
+treatmentOfPromises();
 
-secondPoint();
